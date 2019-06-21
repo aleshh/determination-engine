@@ -1,26 +1,56 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, { Component } from 'react';
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+import CssBaseline from '@material-ui/core/CssBaseline';
+import Paper from '@material-ui/core/Paper';
+
+import Header from './components/Header';
+import TabBar from './components/TabBar';
+import Overview from './components/Overview';
+import Details from './components/Details';
+
+import data from './dataService';
+
+class App extends Component {
+  state = {};
+
+  openMenu = () => {
+    console.log('Open menu')
+  }
+
+  calculate = () => {
+    console.log('Calculate')
+  }
+
+  addChannel = () => {
+    console.log('Add channel')
+  }
+
+  loadData = () => {
+    this.setState(data);
+  }
+
+  componentDidMount() {
+    this.loadData();
+  }
+
+  render() {
+    if (!this.state.gross) {
+      return ('Loading data...');
+    } else {
+      return (
+        <React.Fragment>
+          <CssBaseline />
+          <Paper square>
+            <Header onMenu={this.openMenu} onCalculate={this.calculate} />
+            <TabBar />
+            <Overview state={this.state} onAddChannel={this.addChannel} />
+            <Details state={this.state} />
+          </Paper>
+        </React.Fragment>
+      );
+    }
+  }
+
 }
 
 export default App;
